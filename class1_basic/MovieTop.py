@@ -7,6 +7,8 @@ import requests
 import re
 import mysql.connector
 
+from class3_CSV_modul.CSVUtils import write_csv_file_dict
+
 
 class MovieTop:
     def __init__(self):
@@ -63,6 +65,11 @@ class MovieTop:
                     '简短影评': movie[10]
                 })
 
+    def write_csv(self):
+        print('开始向CSV中写入数据...')
+        header = ['电影排名', '电影名称', '外文名称', '电影别名', '导演姓名', '上映年份', '制作国家/地区', '电影类别', '电影评分', '参评人数', '简短影评']
+        write_csv_file_dict('D:\Python_Work_Space\web_crawler\class1_basic\movie.csv', header, self.movie_list)
+
     def write_text(self):
         print('开始向文件写入数据...')
         with open(self.file_path, 'w', encoding='utf-8')as file_top:
@@ -114,8 +121,9 @@ class MovieTop:
     def main(self):
         print('开始从豆瓣电影抓取数据...')
         self.get_movie_info()
-        self.write_text()
-        self.db_connect()
+        self.write_csv()
+        # self.write_text()
+        # self.db_connect()
         print('数据抓取完成')
 
 

@@ -1,7 +1,7 @@
 #!usr\bin\python3
 # -*- encoding: UTF-8 -*-
 
-__author__ = 'Wolf li'
+__author__ = 'Wolf li.csv'
 
 from class2_mysql_modul.file_py.db_connect import MySQLConnect
 
