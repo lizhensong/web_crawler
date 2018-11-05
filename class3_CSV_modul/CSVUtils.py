@@ -6,13 +6,15 @@ __author__ = 'Wolf li.csv'
 # CSV文件操作工具
 
 import csv
+import os
 
 
 # 将数据写入CSV文件,head传入list，data传入list包list，每个list一行
-def write_csv_file_list(path, head=None, data=None):
+def write_csv_file_list(path, open_method='w', head=None, data=None):
+    print('正在保存数据')
     try:
         # 如果不指定newline='',则每写入一行将有一空行被写入
-        with open(path, 'w', newline='', encoding='utf-8')as csv_file:
+        with open(path, open_method, newline='', encoding='utf-8')as csv_file:
             writer = csv.writer(csv_file)
             if head is not None:
                 writer.writerow(head)
@@ -24,11 +26,12 @@ def write_csv_file_list(path, head=None, data=None):
                     writer.writerow(row)
         print('Write a CSV file to path-->{} is Successful'.format(path))
     except Exception as e:
-        print(e)
+        raise e
 
 
 # 将数据从CSV文件读出****read读取只能遍历一次，遍历后它里边的属性就没了。
 def read_csv_file_list(path):
+    print('正在读取数据')
     try:
         with open(path)as csv_file:
             reader = csv.reader(csv_file, encoding='utf-8')
@@ -46,15 +49,19 @@ def read_csv_file_list(path):
 
 # 将数据写入CSV文件,head传入list(list中是data数据中dict的key，将写在第一行)，
 # data传入list包dict，每个dict一行，会自动去除key。
-def write_csv_file_dict(path, head=None, data=None):
+def write_csv_file_dict(path, open_method='w', head=None, data=None):
+    print('正在保存数据')
     try:
-        with open(path, 'w', newline='', encoding='utf-8')as csv_file:
+        with open(path, open_method, newline='', encoding='utf-8')as csv_file:
             writer = csv.DictWriter(csv_file, head)
-            writer.writeheader()
-            if data is not None:
-                # writer.writerows(data)
-                for row in data:
-                    writer.writerow(row)
+            if os.path.exists(path):
+                if os.path.getsize(path) == 0:
+                    writer.writeheader()
+                if data is not None:
+                    writer.writerows(data)
+
+                # for row in data:
+                #     writer.writerow(row)
         print('Write a CSV file to path-->{} is Successful'.format(path))
     except Exception as e:
         print(e)
@@ -63,6 +70,7 @@ def write_csv_file_dict(path, head=None, data=None):
 # 使用DictReader可以像操作字典那样获取数据，把表的第一行（一般是标头）作为key。
 # 可访问每一行中那个某个key对应的数据。
 def read_csv_file_dict(path):
+    print('正在读取数据')
     try:
         with open(path)as csv_file:
             reader = csv.DictReader(csv_file, encoding='utf-8')
