@@ -1,7 +1,7 @@
 #!usr\bin\python3
 # -*- encoding: UTF-8 -*-
 
-__author__ = 'Wolf li.csv'
+__author__ = 'Wolf li'
 
 # CSV文件操作工具
 
@@ -41,7 +41,7 @@ def read_csv_file_list(path):
             #     # 行号从1开始
             #     print(reader.line_num, row)
             # list(reader)是一个list包list集。
-            print(list(reader))
+            # print(list(reader))
             return list(reader)
     except Exception as e:
         print(e)
@@ -80,7 +80,7 @@ def read_csv_file_dict(path):
             #     # 行号从1开始
             #     print(reader.line_num, row)
             # list(reader)是一个list包list集。
-            print(list(reader))
+            # print(list(reader))
             return list(reader)
     except Exception as e:
         print(e)
