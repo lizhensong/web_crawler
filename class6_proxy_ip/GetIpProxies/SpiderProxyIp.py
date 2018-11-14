@@ -24,18 +24,20 @@ def ip_opera(html_page):
     # 高匿代理ip页面中所列出的ip数量
     ip_number = len(agency_ip)
     print('{}个ip需要验证（请耐心等候）......'.format(ip_number))
+    data_list = []
     for j in range(ip_number):
         print('第{}个，ip号：{}，端口号：{}'.format(j, agency_ip[j], agency_port[j]))
         test_info = ip_test(agency_ip[j], agency_port[j])
         if test_info:
-            write_csv_file_list('./ip.csv', 'a', data=[[agency_protocol[j]+'://'+agency_ip[j]+':'+agency_port[j]]])
+            data_list.append([agency_protocol[j].lower(), agency_protocol[j].lower()+'://'+agency_ip[j]+':'+agency_port[j]])
+    write_csv_file_list('./ip.csv', data=data_list)
 
 
 # 验证获取到的代理IP是否可用
 def ip_test(verify_ip, verify_ip_port):
     print('正在验证此代理IP是否可用......')
     try:
-        telnetlib.Telnet(verify_ip, verify_ip_port, timeout=10)
+        telnetlib.Telnet(verify_ip, verify_ip_port, timeout=1)
     except Exception as e:
         print('此代理IP不可用')
         print('-------------------------')
